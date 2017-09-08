@@ -7,4 +7,4 @@ COPY . .
 
 RUN cargo install
 
-CMD ["file_descriptor_test"]
+CMD ["fd_test"]

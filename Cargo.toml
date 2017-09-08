@@ -5,3 +5,4 @@ authors = ["Brian L. Troutwine <blt@postmates.com>"]
 
 [dependencies]
 hopper = "0.3.1"
+lazy_static = "0.2.1"
