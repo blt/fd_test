@@ -1,4 +1,3 @@
-
 extern crate hopper;
 #[macro_use]
 extern crate lazy_static;
@@ -12,12 +11,12 @@ lazy_static! {
 
 fn send(idx: usize, mut sender: hopper::Sender<u64>) -> () {
     let mut cur = 0;
-    let sleep_time = time::Duration::from_millis(1);
+    let sleep_time = time::Duration::new(0, ((idx+1) as u32) * 100);
     loop {
+        thread::sleep(sleep_time);
         sender.send(cur);
         (SIGNS.lock().unwrap())[idx].fetch_add(1, sync::atomic::Ordering::Relaxed);
         cur = cur.wrapping_add(1);
-        thread::sleep(sleep_time);
     }
 }
 
@@ -51,7 +50,7 @@ fn monitor() -> () {
 
 fn main() {
     let mut joins = Vec::new();
-    let (sender, receiver) = hopper::channel("fd_test", path::Path::new("/tmp/fd_test")).unwrap();
+    let (sender, receiver) = hopper::channel_with_max_bytes("fd_test", path::Path::new("/tmp/fd_test"), 1024).unwrap();
 
     for i in 0..10 {
         (SIGNS.lock().unwrap()).push(AtomicUsize::new(0));
