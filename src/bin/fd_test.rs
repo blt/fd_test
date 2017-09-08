@@ -59,6 +59,7 @@ fn main() {
         let snd = sender.clone();
         joins.push(thread::spawn(move || send(i, snd)));
     }
+    drop(sender);
 
     (SIGNS.lock().unwrap()).push(AtomicUsize::new(0));
     joins.push(thread::spawn(move || recv(top, receiver)));
