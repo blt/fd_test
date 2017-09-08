@@ -1,0 +1,7 @@
+[package]
+name = "fd_test"
+version = "0.1.0"
+authors = ["Brian L. Troutwine <blt@postmates.com>"]
+
+[dependencies]
+hopper = "0.3.1"
