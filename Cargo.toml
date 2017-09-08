@@ -3,6 +3,14 @@ name = "fd_test"
 version = "0.1.0"
 authors = ["Brian L. Troutwine <blt@postmates.com>"]
 
+[[bin]]
+name = "fd_test"
+doc = false
+
+[[bin]]
+name = "thread_pass"
+doc = false
+
 [dependencies]
 hopper = "0.3.1"
 lazy_static = "0.2.1"

@@ -52,14 +52,16 @@ fn main() {
     let mut joins = Vec::new();
     let (sender, receiver) = hopper::channel_with_max_bytes("fd_test", path::Path::new("/tmp/fd_test"), 1024).unwrap();
 
-    for i in 0..10 {
+    let top = 4;
+
+    for i in 0..top {
         (SIGNS.lock().unwrap()).push(AtomicUsize::new(0));
         let snd = sender.clone();
         joins.push(thread::spawn(move || send(i, snd)));
     }
 
     (SIGNS.lock().unwrap()).push(AtomicUsize::new(0));
-    joins.push(thread::spawn(move || recv(10, receiver)));
+    joins.push(thread::spawn(move || recv(top, receiver)));
 
     joins.push(thread::spawn(monitor));
 
